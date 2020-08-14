@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Notepad</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <string name="send_mail_intent_choose_title">Choose App To Send Mail</string>
+    <string name="mail_intent_type">message/rfc822</string>
+    <string name="note_empty_error">Enter Note Title To Perform Action</string>
+</resources>

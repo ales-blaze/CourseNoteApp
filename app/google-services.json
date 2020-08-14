@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "190775200768",
+    "firebase_url": "https://coursenoteapp.firebaseio.com",
+    "project_id": "coursenoteapp",
+    "storage_bucket": "coursenoteapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190775200768:android:e6b4e1a960296dc5581ce5",
+        "android_client_info": {
+          "package_name": "com.example.notepad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190775200768-g25a129t3a63b41aqssjjo4eojs85n2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW2nDP5AyKOw2RX1FFlTIIJUgC8aJ0DiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190775200768-g25a129t3a63b41aqssjjo4eojs85n2q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
