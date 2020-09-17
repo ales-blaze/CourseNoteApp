@@ -16,8 +16,18 @@ public class Course extends BaseObservable {
     private String mTitle;
     @ColumnInfo(name = "description")
     private String mDescription;
+
     @Ignore
     private boolean isNew = false;
+
+    public Course(){}
+
+    public Course(int id, String mTitle, String mDescription, boolean isNew) {
+        this.id = id;
+        this.mTitle = mTitle;
+        this.mDescription = mDescription;
+        this.isNew = isNew;
+    }
 
     public boolean isNew() {
         return isNew;

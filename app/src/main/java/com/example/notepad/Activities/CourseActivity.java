@@ -1,6 +1,7 @@
 package com.example.notepad.Activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,7 +19,9 @@ import com.google.gson.Gson;
 
 public class CourseActivity extends AppCompatActivity {
 
+    private static final String TAG = "CourseActivity";
     public static final String COURSE = "COURSE";
+    public static final int NEW_NOTE_ID = 0;
     private CourseViewModel courseViewModel;
     private ActivityCourseBinding courseBinding;
     private Course course;
@@ -30,22 +33,30 @@ public class CourseActivity extends AppCompatActivity {
         courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         courseBinding = DataBindingUtil.setContentView(this,R.layout.activity_course);
 
-        course = new Course();
-        if (getIntent() != null) {
-             course.setId(getIntent().getIntExtra("COURSE_ID",0));
-             if (course.getId() == 0) {
-                 course.setTitle("");
-                 course.setDescription("");
-                 course.setNew(true);
-             }else {
-                 course = courseViewModel.getCourse(course.getId());
-             }
-        }else {
-            return;
-        }
-
+        course = getCourseFromIntent();
         courseBinding.setCours(course);
 
+    }
+
+    private Course getCourseFromIntent() {
+        if (getIntent() != null) {
+            int courseId = getIntent().getIntExtra("COURSE_ID",0);
+            return getCourseFromId(courseId);
+        }
+        Log.d(TAG, "getCourseFromIntent: Null Intent Passed");
+        return createNewCourse();
+    }
+
+    private Course getCourseFromId(int courseId) {
+        Course course = createNewCourse();
+        if (courseId != NEW_NOTE_ID){
+            course = courseViewModel.getCourse(courseId);
+        }
+        return course;
+    }
+
+    private Course createNewCourse() {
+        return new Course(0,"","",true);
     }
 
     @Override

@@ -38,9 +38,7 @@ public class CourseRepository {
     public void insert(Course course ) {
         try {
             new insertTask(mCourseDao).execute(course).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -60,9 +58,7 @@ public class CourseRepository {
     public void update(Course course ) {
         try {
             new updateTask(mCourseDao).execute(course).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -82,14 +78,12 @@ public class CourseRepository {
     public void deleteCourse(Course course) {
         try {
             new deleteTask(mCourseDao).execute(course).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private class deleteTask extends AsyncTask<Course,Void,Boolean>{
+    private static class deleteTask extends AsyncTask<Course,Void,Boolean>{
         private CourseDao mCourseDao;
         deleteTask(CourseDao courseDao) {
             mCourseDao = courseDao;
@@ -106,15 +100,13 @@ public class CourseRepository {
         Course course = new Course();
         try {
             course = new getCourseById(mCourseDao).execute(courseId).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return course;
     }
 
-    private class getCourseById extends AsyncTask<Integer,Void,Course>{
+    private static class getCourseById extends AsyncTask<Integer,Void,Course>{
         private CourseDao mCourseDao;
         getCourseById(CourseDao courseDao) {
             mCourseDao = courseDao;
@@ -129,9 +121,7 @@ public class CourseRepository {
     public int getCourseIdByTitle(String courseTitle) {
         try {
             return new getCourseIdByTitleTask(mCourseDao).execute(courseTitle).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return -1;
@@ -152,9 +142,7 @@ public class CourseRepository {
         Course course = new Course();
         try {
             course = new getCourseWithGivenTitleTask(mCourseDao).execute(title).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return course;
@@ -172,19 +160,13 @@ public class CourseRepository {
     }
 
     public void addCourseToCloud(@NonNull Course course , final CourseCallbacks callbacks , String userName) {
-        if (course == null) {
-            Log.d(TAG, "addToCloud: Invalid Course Input");
-            return;
-        }
         FirebaseFirestore.getInstance().
-                collection(userName + "-course")
+                collection(userName.replace(" ","") + "-course")
                 .add(course)
                 .addOnSuccessListener(documentReference -> {
                     callbacks.courseUploadSucceeded(documentReference.getId());
                 })
-                .addOnFailureListener(e -> {
-                    callbacks.CourseUploadFailed(e);
-                });
+                .addOnFailureListener(callbacks::CourseUploadFailed);
     }
 
     public void getCoursesFromCloud(final CourseCallbacks courseCallbacks,String userName) {

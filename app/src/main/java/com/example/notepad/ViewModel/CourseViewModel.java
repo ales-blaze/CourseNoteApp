@@ -20,6 +20,7 @@ public class CourseViewModel extends AndroidViewModel {
     private CourseRepository mRepository;
     private LiveData<List<Course>> mCourses;
     private static final String TAG = "CourseViewModel";
+
     public CourseViewModel(@NonNull Application application) {
         super(application);
         mRepository = new CourseRepository(application);
@@ -31,15 +32,28 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public void insert(Course course) {
-         mRepository.insert(course);
+        if (course != null) {
+            mRepository.insert(course);
+        } else {
+            Log.d(TAG, "insert() called with: course = [" + course + "]");
+        }
     }
 
     public void update(Course course) {
-        mRepository.update(course);
+        if (course != null) {
+            mRepository.update(course);
+        } else {
+            Log.d(TAG, "update() called with: course = [" + course + "]");
+        }
     }
 
     public void delete(Course course) {
-        mRepository.deleteCourse(course);
+        if (course != null) {
+            mRepository.deleteCourse(course);
+        }
+        else {
+            Log.d(TAG, "delete() called with: course = [" + course + "]");
+        }
     }
 
     public Course getCourse(int courseId) {
@@ -47,7 +61,7 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     @NonNull
-    public int getCourseIdByTitle(@NonNull String courseTitle) {
+    public int getCourseIdByTitle(String courseTitle) {
         if (courseTitle == null) return INVALID_ID;
         return mRepository.getCourseIdByTitle(courseTitle);
     }

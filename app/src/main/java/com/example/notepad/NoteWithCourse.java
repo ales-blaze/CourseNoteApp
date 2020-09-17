@@ -5,10 +5,18 @@ import androidx.room.Relation;
 
 public class NoteWithCourse {
     @Embedded
-    public Note note;
+    private Note note;
     @Relation(
             parentColumn = "course_id",
             entityColumn = "course_id"
     )
-    public Course course;
+    private Course course;
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public Note getNote() {
+        return note;
+    }
 }
